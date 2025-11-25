@@ -125,9 +125,13 @@ async function updateScannerDetails() {
 }
 
 async function loadRecentScans() {
+    if (!currentScannerId) return;
+
     try {
         const sessionToken = localStorage.getItem('session_token');
-        const response = await fetch('/api/logs?limit=10', {
+        const today = new Date().toISOString().split('T')[0];
+
+        const response = await fetch(`/api/logs?scanner_id=${currentScannerId}&limit=10`, {
             headers: {
                 'Authorization': `Bearer ${sessionToken}`
             }
@@ -312,7 +316,12 @@ function startAutoScan() {
         // This is where you would integrate with actual RFID hardware
         // For now, we'll just show a status update
         
+        // Refresh recent scans and stats
         loadRecentScans();
+        loadScannerStats();
+        
+        // Visual feedback
+        flashScanIndicator();
     }, 500); // Check every 5 seconds
     
     showNotification('Auto-scan mode activated', 'success');

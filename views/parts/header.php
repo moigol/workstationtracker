@@ -20,7 +20,7 @@
                     <li><a href="/scan" class="menu-item" id="menu-scan">Scan</a></li>
                     <li><a href="/scanners" class="menu-item" id="menu-scanners">Stations</a></li>
                     <li><a href="/rfid-tags" class="menu-item" id="menu-rfid-tags">RFID Tag IDs</a></li>
-                    <li><a href="/items" class="menu-item" id="menu-items">Staffs/Techs</a></li>
+                    <li><a href="/staffs" class="menu-item" id="menu-items">Staffs/Techs</a></li>
                 </ul>
             </nav>
         </header>

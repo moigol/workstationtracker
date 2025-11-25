@@ -27,21 +27,20 @@
                 </div>
 
                 <div class="scanner-form">
-                    <div class="form-row">
                         <div class="form-group">
                             <label for="tag-input">RFID Tag UID:</label>
                             <input type="text" id="tag-input" placeholder="Enter or scan tag UID" required>
                         </div>
-                        <div class="form-group">
+                        <input type="hidden" id="scan-type" value="IN" />
+                        <!-- <div class="form-group">
                             <label for="scan-type">Scan Type:</label>
                             <select id="scan-type" required>
                                 <option value="IN">IN</option>
                                 <option value="OUT">OUT</option>
                             </select>
-                        </div>
-                    </div>
+                        </div> -->
                     <button class="manual-scan-btn" id="manual-scan-btn">
-                        Record Scan
+                        Login
                     </button>
                 </div>
 

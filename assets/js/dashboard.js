@@ -147,10 +147,10 @@ function loadLogs() {
                 const row = document.createElement('tr');
                 row.innerHTML = `                    
                     <td>${log.staff_name || 'No staff assigned'}</td>
-                    <td>${log.scanner_name}</td>
-                    <td>${log.tag_name} <small class="badge tag">${log.tag_id}</small></td>
+                    <td><span class="badge tag">${log.scanner_name}</span></td>
+                    <td><small class="badge in">${log.tag_name}</small> <small class="badge out">${log.tag_id}</small></td>
                     <td>${new Date(log.date_time).toLocaleString()}</td>
-                    <td>${new Date(log.date_time_out).toLocaleString()}</td>
+                    <td>${(log.date_time_out) ? new Date(log.date_time_out).toLocaleString() : ''}</td>
                 `;
                 tableBody.appendChild(row);
             });
