@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2025 at 07:26 AM
+-- Generation Time: Nov 27, 2025 at 04:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rfidlogger`
+-- Database: `workstationtracker`
 --
 
 -- --------------------------------------------------------
@@ -56,37 +56,25 @@ CREATE TABLE `logs` (
   `type` enum('In','Out') NOT NULL DEFAULT 'In',
   `scanner_id` int(11) DEFAULT NULL,
   `tag_id` varchar(100) NOT NULL,
-  `date_time` timestamp NOT NULL DEFAULT current_timestamp()
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_time_out` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `logs`
 --
 
-INSERT INTO `logs` (`id`, `type`, `scanner_id`, `tag_id`, `date_time`) VALUES
-(1, 'In', 1, 'd21dccab', '2025-09-11 20:12:15'),
-(2, 'In', 1, 'd21dccab', '2025-09-11 20:48:40'),
-(3, 'In', 1, 'd21dccab', '2025-09-11 20:49:33'),
-(4, 'In', 1, '95b2d9bc', '2025-09-11 23:24:11'),
-(5, 'In', 1, '95b2d9bc', '2025-09-11 23:25:18'),
-(6, 'In', 1, 'a5503947', '2025-09-11 23:26:11'),
-(7, 'In', 1, '025f603e344000', '2025-09-11 23:26:48'),
-(8, 'In', 1, 'c3bf7839', '2025-09-11 23:27:15'),
-(9, 'In', 1, 'd21dccab', '2025-09-11 23:27:20'),
-(10, 'In', 1, 'c3bf7839', '2025-09-12 01:07:09'),
-(11, 'In', 1, 'd21dccab', '2025-09-12 01:07:43'),
-(12, 'In', 1, 'd21dccab', '2025-09-12 01:11:56'),
-(13, 'In', 1, 'd21dccab', '2025-09-12 01:12:32'),
-(14, 'In', 1, 'd21dccab', '2025-09-12 01:30:22'),
-(15, 'In', 1, 'd21dccab', '2025-09-12 01:30:26'),
-(16, 'In', 1, 'd21dccab', '2025-09-12 01:30:31'),
-(17, 'In', 1, 'd21dccab', '2025-09-12 01:47:58'),
-(18, 'In', 2, 'd21dccab', '2025-09-12 01:58:49'),
-(19, 'In', 2, 'c3bf7839', '2025-09-12 01:58:53'),
-(28, 'In', 2, 'c3bf7839', '2025-09-12 03:21:06'),
-(29, 'Out', 1, 'c3bf7839', '2025-10-29 22:48:38'),
-(30, 'In', 1, 'c3bf7839', '2025-10-29 22:49:02'),
-(31, 'Out', 1, 'c3bf7839', '2025-10-29 23:14:04');
+INSERT INTO `logs` (`id`, `type`, `scanner_id`, `tag_id`, `date_time`, `date_time_out`) VALUES
+(1, 'In', 1, 'c3bf7839', '2025-11-25 05:57:42', '2025-11-25 14:37:44'),
+(2, 'In', 1, 'd21dccab', '2025-11-25 06:38:17', '2025-11-25 15:08:44'),
+(3, 'In', 1, 'a5503947', '2025-11-25 08:09:09', '2025-11-25 16:39:44'),
+(4, 'In', 3, '95b2d9bc', '2025-11-25 15:06:21', '2025-11-25 23:36:44'),
+(5, 'Out', 3, '95b2d9bc', '2025-11-25 15:14:39', NULL),
+(6, 'In', 3, '95b2d9bc', '2025-11-25 15:14:53', '2025-11-25 23:45:44'),
+(7, 'Out', 1, 'c3bf7839', '2025-11-25 15:15:32', NULL),
+(8, 'In', 1, 'c3bf7839', '2025-11-25 15:16:52', '2025-11-25 23:47:44'),
+(9, 'Out', 1, 'c3bf7839', '2025-11-25 15:16:57', NULL),
+(10, 'In', 1, 'c3bf7839', '2025-11-25 15:20:51', '2025-11-25 23:51:44');
 
 -- --------------------------------------------------------
 
@@ -107,10 +95,11 @@ CREATE TABLE `rfid_tags` (
 --
 
 INSERT INTO `rfid_tags` (`id`, `tag_id`, `name`, `description`, `date_added`) VALUES
-(1, 'd21dccab', 'Key Fob', 'Key Chain tag', '2025-09-10 16:09:42'),
-(2, 'c3bf7839', 'White Card', 'Plain white card which is printable.', '2025-09-10 16:09:58'),
-(4, '95b2d9bc', 'Simpliciti MASTERCARD', 'MASTERCARD CC', '2025-09-12 04:57:36'),
-(5, '025f603e344000', 'Simpliciti REWARDS', 'REWARDS VISA PLATINUM', '2025-09-12 04:58:42');
+(1, 'd21dccab', 'Key Fob', '', '2025-09-10 16:09:42'),
+(2, 'c3bf7839', 'White Card', '', '2025-09-10 16:09:58'),
+(4, '95b2d9bc', 'Blue Card', '', '2025-09-12 04:57:36'),
+(5, '025f603e344000', 'Orange Card', '', '2025-09-12 04:58:42'),
+(6, 'a5503947', 'Citi Card', '', '2025-11-25 05:28:24');
 
 -- --------------------------------------------------------
 
@@ -130,11 +119,38 @@ CREATE TABLE `scanners` (
 --
 
 INSERT INTO `scanners` (`id`, `name`, `description`, `date_added`) VALUES
-(1, 'Lobby', 'IC-RFID-0001', '2025-09-10 14:49:46'),
-(2, 'Cafeteria', 'IC-RFID-0002', '2025-09-10 16:04:38'),
-(3, 'Production', 'IC-RFID-0003', '2025-09-10 16:05:26'),
-(4, 'HR Office', 'IC-RFID-0004', '2025-09-10 16:07:28'),
-(5, 'Engineering Office', 'IC-RFID-0005', '2025-09-10 16:07:34');
+(1, 'Station 1', 'IC-RFID-0001', '2025-09-10 14:49:46'),
+(2, 'Station 2', 'IC-RFID-0002', '2025-09-10 16:04:38'),
+(3, 'Station 3', 'IC-RFID-0003', '2025-09-10 16:05:26'),
+(4, 'Station 4', 'IC-RFID-0004', '2025-09-10 16:07:28'),
+(5, 'Station 5', 'IC-RFID-0005', '2025-09-10 16:07:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staffs`
+--
+
+CREATE TABLE `staffs` (
+  `id` int(11) NOT NULL,
+  `tag_id` varchar(100) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `position` varchar(128) DEFAULT NULL,
+  `date_added` timestamp NOT NULL DEFAULT current_timestamp(),
+  `avatar` text DEFAULT NULL,
+  `allowed_stations` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staffs`
+--
+
+INSERT INTO `staffs` (`id`, `tag_id`, `name`, `position`, `date_added`, `avatar`, `allowed_stations`) VALUES
+(1, 'd21dccab', 'Allen Iverson', 'Lead Operator', '2025-09-10 16:17:39', 'avatar-s-1.png', '1|4|5'),
+(2, 'c3bf7839', 'Magnus Carlsen', 'Quality Control', '2025-09-10 16:17:45', 'avatar-s-2.png', '1|2|3|4|5'),
+(9, '95b2d9bc', 'Luka Doncic', 'Supervisor', '2025-09-12 08:03:19', 'avatar-s-3.png', '3'),
+(10, '025f603e344000', 'Anatoly Karpov', 'Manager', '2025-09-12 08:03:56', 'avatar-s-4.png', '2'),
+(14, 'a5503947', 'Lito Mano', 'Janitor', '2025-11-25 05:26:23', 'avatar-s-5.png', '1|2|3|4|5');
 
 -- --------------------------------------------------------
 
@@ -192,7 +208,12 @@ INSERT INTO `tags` (`id`, `scanner_id`, `tag_id`, `description`, `date_time`) VA
 (36, 1, '9236a8ab', NULL, '2025-09-12 01:12:45'),
 (37, 2, '9236a8ab', NULL, '2025-09-12 01:58:42'),
 (38, 2, 'cf6f9dda', NULL, '2025-09-12 01:58:57'),
-(39, 2, 'cf6f9dda', NULL, '2025-09-12 02:14:43');
+(39, 2, 'cf6f9dda', NULL, '2025-09-12 02:14:43'),
+(40, 2, '123123123', NULL, '2025-11-23 03:10:47'),
+(41, 2, 'asdfasdfasdf', NULL, '2025-11-23 03:15:47'),
+(42, 2, '$device', NULL, '2025-11-23 03:18:28'),
+(43, 3, 'a5503947', NULL, '2025-11-24 22:27:20'),
+(44, 3, 'a5503947', NULL, '2025-11-24 22:28:07');
 
 -- --------------------------------------------------------
 
@@ -263,6 +284,12 @@ ALTER TABLE `scanners`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `staffs`
+--
+ALTER TABLE `staffs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
@@ -297,13 +324,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `rfid_tags`
 --
 ALTER TABLE `rfid_tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `scanners`
@@ -312,10 +339,16 @@ ALTER TABLE `scanners`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `staffs`
+--
+ALTER TABLE `staffs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -338,6 +371,20 @@ ALTER TABLE `user_sessions`
 --
 ALTER TABLE `user_sessions`
   ADD CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `auto_update_date_time_out` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-11-25 13:44:44' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+    UPDATE logs 
+    SET date_time_out = NOW() 
+    WHERE type = 'In' 
+    AND date_time_out IS NULL 
+    AND TIMESTAMPDIFF(MINUTE, date_time, NOW()) >= 30;
+END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
